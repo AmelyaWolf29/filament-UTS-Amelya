@@ -1,0 +1,58 @@
+<?php
+
+namespace App\Filament\Resources\SettingSeos\Tables;
+
+use Filament\Actions\BulkActionGroup;
+use Filament\Actions\DeleteBulkAction;
+use Filament\Actions\EditAction;
+use Filament\Actions\ForceDeleteBulkAction;
+use Filament\Actions\RestoreBulkAction;
+use Filament\Actions\ViewAction;
+use Filament\Tables\Filters\TrashedFilter;
+use Filament\Tables\Columns\TextColumn;
+use Filament\Tables\Table;
+
+class SettingSeosTable
+{
+    public static function configure(Table $table): Table
+    {
+        return $table
+            ->columns([
+                TextColumn::make('meta_title')
+                    ->label('Judul halaman SEO')
+                    ->searchable()
+                    ->sortable(),
+                TextColumn::make('meta_description')
+                    ->label('Deskripsi SEO')
+                    ->searchable()
+                    ->sortable(),
+                TextColumn::make('meta_keywords')
+                    ->label('Kata Kunci SEO')
+                    ->searchable()
+                    ->sortable(),
+                TextColumn::make('robots')
+                    ->label('Meta Robots SEO')
+                    ->searchable()
+                    ->sortable(),
+                TextColumn::make('created_at')
+                    ->since(), // "x minutes ago"
+                TextColumn::make('updated_at')
+                    ->since(), // "x minutes ago"
+                
+            ])
+            ->filters([
+                TrashedFilter::make(),
+            ])
+            ->recordActions([
+                ViewAction::make(),
+                EditAction::make(),
+            ])
+            ->toolbarActions([
+                BulkActionGroup::make([
+                    DeleteBulkAction::make(),
+                    ForceDeleteBulkAction::make(),
+                    RestoreBulkAction::make(),
+                ]),
+            ]);
+    }
+}
